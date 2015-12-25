@@ -14,24 +14,23 @@
 #include <string.h>  
 #include <pthread.h>
 #include <syslog.h>
+#include <assert.h>
 
 #include "luemiu.h"
-#include "client.h"
 
-#define MAXEVENTS 64
-#define MAXBUFF 512
+#define MAXEVENTS 1024
 
-int efd;
+int sfd;//socket fd
+int efd;//epoll fd
 struct epoll_event event;
 struct epoll_event * events;
-extern pthread_mutex_t accept_mutex;
 
 #include "list.h"
-extern struct list_head incomming_head;//incomming client accept to this
+extern struct list_head head;//incomming client accept to this
 
-struct client_info
+struct client
 {
-		int clientfd;
+		struct epoll_event cevent;//client epoll event
 		struct list_head list;		
 };
 

@@ -1,11 +1,10 @@
 #include "main.h"
 
-pthread_mutex_t accept_mutex = PTHREAD_MUTEX_INITIALIZER;
-LIST_HEAD(incomming_head);
+LIST_HEAD(head);
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 int main (int argc, char *argv[])  
 {  
-		pthread_t acceptid, commutid;
-		int sfd;
+		pthread_t ctid;//operation client data thread
 		if (argc != 2)  
 		{  
 				fprintf (stderr, "Usage: %s [port]\n", argv[0]);  
@@ -56,67 +55,66 @@ int main (int argc, char *argv[])
 		while(1)  
 		{  
 				int n, i, result;  
+				int opflag = 0;
 				if( (n = epoll_wait(efd, events, MAXEVENTS, -1)) == -1)
 						if( (errno == EINTR) || (errno == EAGAIN) )
 								continue;
 				syslog(LOG_INFO, "%s %d Epoll wait count[%d]\n", __FILE__, __LINE__, n);
 				for(i = 0; i < n; i++)  
 				{  
-						syslog(LOG_INFO, "%s %d Events[%d].events = [0x%X]\n", __FILE__, __LINE__, n, events[i].events);
-						if(sfd == events[i].data.fd)  
-						{  
-								if( (result = pthread_create(&acceptid, NULL, accept_client, 
-																(void *)events[i].data.fd)) != 0)
-										syslog(LOG_ERR, "%s %d Incomming event[%d]'s FD is [%d],"
-														" Creating accept thread error %s\n", 
-														__FILE__, __LINE__, i, events[i].data.fd, strerror(result));
-								else
-										syslog(LOG_INFO, "%s %d Incomming event[%d]'s FD is [%d],"
-														" Created accept thread ID [%lu]\n",
-														__FILE__, __LINE__, n, events[i].data.fd, acceptid);
-								continue;  
-						}  
-						else if(events[i].events & EPOLLRDHUP)
+						syslog(LOG_INFO, "%s %d Events[%d].events = [0x%X] insert event to head\n",
+										__FILE__, __LINE__, n, events[i].events);
+						if(events[i].data.fd == sfd)
 						{
-								if( (result = pthread_create(&acceptid, NULL, close_client, 
-																(void *)events[i].data.fd)) != 0)
+								if( (result = pthread_create(&ctid, NULL, accept_thread, NULL)) != 0)
 								{
-										syslog(LOG_ERR, "%s %d Catach EPOLLRDHUP events[0x%X]'s FD is [%d],"
-														" Creating close thread error %s\n", 
-														__FILE__, __LINE__, i, events[i].data.fd, strerror(result));
-										close_client((void *)events[i].data.fd);  
+										syslog(LOG_INFO, "%s %d event[%d] accept thread create error %s\n",
+														__FILE__, __LINE__, n, strerror(result));
 								}
 								else
+										syslog(LOG_INFO, "%s %d event[%d] accept thread created\n",
+														__FILE__, __LINE__, n );
+								continue;
+						}
+						if( (events[i].events & EPOLLRDHUP) || (events[i].events & EPOLLHUP)
+										|| (events[i].events & EPOLLERR) || (events[i].events & EPOLLPRI) )
+						{
+								syslog(LOG_INFO, "%s %d EPOLLRDHUP[0x%X]EPOLLHUP[0x%X]EPOLLERR[0x%X]EPOLLPRI[0x%X]\n",
+												__FILE__, __LINE__, events[i].events & EPOLLRDHUP,
+												events[i].events & EPOLLHUP, events[i].events & EPOLLERR,
+												events[i].events & EPOLLPRI);
+								if( (result = pthread_create(&ctid, NULL, close_thread, (void *)events[i].data.fd)) != 0)
 								{
-										syslog(LOG_INFO, "%s %d Catch EPOLLRDHUP events[0x%X]'s FD is [%d],"
-														" Created close thread ID [%lu]\n",
-														__FILE__, __LINE__, n, events[i].data.fd, acceptid);
+										syslog(LOG_INFO, "%s %d Close thread create error %s\n",
+														__FILE__, __LINE__, strerror(result));
 								}
 								continue;
 						}
-						else if(events[i].events & EPOLLIN) 
-						{  
-								if( (result = pthread_create(&commutid, NULL, opera_data, 
-																(void *)events[i].data.fd)) !=0)
+						if(events[i].events & EPOLLIN)
+						{
+								struct client * sc = (struct client *)malloc(sizeof(struct client));
+								if(sc == NULL)
 								{
-										syslog(LOG_ERR, "%s %d Incomming event[%d]'s FD is [%d],"
-														" Creating thread opera error, closing it %s\n", 
-														__FILE__, __LINE__, i, events[i].data.fd, strerror(result));
-										close (events[i].data.fd);  
-										continue;  
+										syslog(LOG_ERR, "%s %d Malloc events[%d].events error\n", __FILE__, __LINE__, i);
+										close(events[i].data.fd);
 								}
-								syslog(LOG_INFO, "%s %d Incomming event[%d]'s FD is [%d], Created thread ID [%lu]\n",
-												__FILE__, __LINE__, n, events[i].data.fd, acceptid);
-						}  
-						else
-						{  /*
-								syslog(LOG_ERR, "%s %d Catch epoll error, closing FD[%d]\n", __FILE__, __LINE__,
-												events[i].data.fd); 
-								close(events[i].data.fd);  
-								continue; */ 
-						}  
-				}  
-		}  
+								sc->cevent = events[i];
+								list_add_tail(&sc->list, &head);	
+								opflag = 1;
+						}
+				} // end for
+				if(opflag)
+				{
+						if( (result = pthread_create(&ctid, NULL, commut_thread, NULL)) != 0)
+						{
+								syslog(LOG_INFO, "%s %d commut thread create error %s, conntinue\n",
+												__FILE__, __LINE__, strerror(result));
+								continue;
+						}
+						syslog(LOG_INFO, "%s %d commut thread[%lu] created\n",
+										__FILE__, __LINE__, ctid);
+				}
+		} // end while 
 		free(events);  
 		close(sfd);  
 		return EXIT_SUCCESS;  
