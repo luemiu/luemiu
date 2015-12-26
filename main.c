@@ -1,7 +1,10 @@
 #include "main.h"
 
 LIST_HEAD(head);
-pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+LIST_HEAD(dog);
+pthread_mutex_t dog_mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t head_mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t dog_cond = PTHREAD_COND_INITIALIZER;
 int main (int argc, char *argv[])  
 {  
 		pthread_t ctid;//operation client data thread
@@ -83,11 +86,17 @@ int main (int argc, char *argv[])
 												__FILE__, __LINE__, events[i].events & EPOLLRDHUP,
 												events[i].events & EPOLLHUP, events[i].events & EPOLLERR,
 												events[i].events & EPOLLPRI);
-								if( (result = pthread_create(&ctid, NULL, close_thread, (void *)events[i].data.fd)) != 0)
+								struct dog * sc = (struct dog *)malloc(sizeof(struct dog));
+								if(sc == NULL)
 								{
-										syslog(LOG_INFO, "%s %d Close thread create error %s\n",
-														__FILE__, __LINE__, strerror(result));
+										syslog(LOG_ERR, "%s %d Malloc events[%d].events error\n", __FILE__, __LINE__, i);
+										close(events[i].data.fd);
 								}
+								sc->fd = events[i].data.fd;
+								pthread_mutex_lock(&dog_mutex);
+								list_add_tail(&sc->list, &dog);	
+//								pthread_cond_wait(&dog_cond, &dog_mutex);
+								pthread_mutex_unlock(&dog_mutex);
 								continue;
 						}
 						if(events[i].events & EPOLLIN)
@@ -99,7 +108,10 @@ int main (int argc, char *argv[])
 										close(events[i].data.fd);
 								}
 								sc->cevent = events[i];
+								sc->readed = 0;
+								pthread_mutex_lock(&head_mutex);
 								list_add_tail(&sc->list, &head);	
+								pthread_mutex_unlock(&head_mutex);
 								opflag = 1;
 						}
 				} // end for
@@ -111,8 +123,13 @@ int main (int argc, char *argv[])
 												__FILE__, __LINE__, strerror(result));
 								continue;
 						}
-						syslog(LOG_INFO, "%s %d commut thread[%lu] created\n",
-										__FILE__, __LINE__, ctid);
+						syslog(LOG_INFO, "%s %d commut thread[%lu] created\n", __FILE__, __LINE__, ctid);
+						if( (result = pthread_create(&ctid, NULL, dog_thread, NULL)) != 0)
+						{
+								syslog(LOG_INFO, "%s %d Dog thread create error %s\n",
+												__FILE__, __LINE__, strerror(result));
+						}
+						syslog(LOG_INFO, "%s %d Dog thread[%lu] created\n", __FILE__, __LINE__, ctid);
 				}
 		} // end while 
 		free(events);  

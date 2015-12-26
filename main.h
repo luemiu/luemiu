@@ -26,10 +26,16 @@ struct epoll_event event;
 struct epoll_event * events;
 
 #include "list.h"
-extern struct list_head head;//incomming client accept to this
+extern struct list_head head;//incomming client list 
+extern struct list_head dog;//close dog list
+
+extern pthread_mutex_t dog_mutex;
+extern pthread_mutex_t head_mutex;
+extern pthread_cond_t dog_cond;
 
 struct client
 {
+		int readed;
 		struct epoll_event cevent;//client epoll event
 		struct list_head list;		
 };

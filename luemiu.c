@@ -69,14 +69,10 @@ void * accept_thread(void * data)
 				socklen_t len = sizeof inaddr;
 				if( (infd = accept(sfd, &inaddr, &len)) == -1)
 				{
-						if( (errno == EAGAIN) || (errno == EWOULDBLOCK) )
-								break;
-						else
-						{
+						if( (errno != EAGAIN) || (errno != EWOULDBLOCK) )
 								syslog(LOG_ERR, "%s %d Thread accept[%lu] accept error %s\n",
 												__FILE__, __LINE__, tid, strerror(errno));
-								break;
-						}
+						break;
 				}
 				syslog(LOG_INFO, "%s %d Incomming client, thread accept[%lu] accept in client FD[%d]\n", 
 								__FILE__, __LINE__, tid, infd);
@@ -163,28 +159,42 @@ void * commut_thread(void * data)
 						syslog(LOG_INFO, "%s %d Thread commut[%lu] writting FD[%d]!\n", 
 										__FILE__, __LINE__, tid, commutfd);
 				} // end while
+				sctmp->readed = 1;
 		} // end list for each
 		return NULL;
 }
 
-void * close_thread(void * data)
+void * dog_thread(void * data)
 {
 		pthread_t tid = pthread_self();
 		pthread_detach(tid);
-		int cfd = (int) data;
-		syslog(LOG_INFO, "%s %d Thread close[%lu] FD[%d] init!\n", __FILE__, __LINE__, tid, cfd);
-		struct list_head * listtmp, * ntmp;
+		syslog(LOG_INFO, "%s %d Thread dog[%lu] init!\n", __FILE__, __LINE__, tid);
+		struct list_head * listclient, * ntmp, * listdog, * ndog;
 		struct client * sctmp;
-		list_for_each_safe(listtmp, ntmp, &head)
+		struct dog * dogtmp;
+//		pthread_cond_signal(&dog_cond);
+		list_for_each_safe(listdog, ndog, &dog)
 		{
-				sctmp = list_entry(listtmp, struct client, list);
-				if(cfd == sctmp->cevent.data.fd)
+				dogtmp = list_entry(listdog, struct dog, list);
+				pthread_mutex_lock(&dog_mutex);
+				list_del(&dogtmp->list);
+				pthread_mutex_unlock(&dog_mutex);
+				list_for_each_safe(listclient, ntmp, &head)
 				{
-						list_del(&sctmp->list);
-						close(sctmp->cevent.data.fd);
-						free(sctmp);
-						break;
+						sctmp = list_entry(listclient, struct client, list);
+						if( (dogtmp->fd == sctmp->cevent.data.fd) && sctmp->readed)
+						{
+								pthread_mutex_lock(&head_mutex);
+								list_del(&sctmp->list);
+								pthread_mutex_unlock(&head_mutex);
+								close(sctmp->cevent.data.fd);
+								free(sctmp);
+								syslog(LOG_INFO, "%s %d Thread dog[%lu] delete FD[%d]\n", 
+												__FILE__, __LINE__, tid, dogtmp->fd);
+								break;
+						}
 				}
+				free(dogtmp);
 		}
 		return NULL;
 }

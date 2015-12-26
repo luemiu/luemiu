@@ -6,6 +6,6 @@ extern int set_nonblocking(int);
 extern char * get_date_time(void);
 extern void * accept_thread(void *);
 extern void * commut_thread(void *);
-extern void * close_thread(void *);
+extern void * dog_thread(void *);
 
 #endif
