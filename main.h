@@ -34,5 +34,9 @@ struct client
 		struct list_head list;		
 };
 
-
+struct dog
+{
+		int fd;	
+		struct list_head list;		
+};
 #endif
