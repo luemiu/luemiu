@@ -4,7 +4,7 @@
 
 extern int bind_sock(char *);
 extern int set_nonblocking(int);
-extern char * get_date_time(void);
+extern char * get_date_time(unsigned long);
 extern void * accept_thread(void *);
 extern void * commut_thread(void *);
 extern void * free_thread(void *);

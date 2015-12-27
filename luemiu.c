@@ -2,10 +2,10 @@
 
 static char str[64];
 
-char * get_date_time(void)
+char * get_date_time(unsigned long threadid)
 {
 		time_t t = time(NULL);
-		snprintf(str, sizeof str, "%.24s\r\n", ctime(&t));
+		snprintf(str, sizeof str, "0x%lX %.24s", threadid, ctime(&t));
 		return str;
 }
 
@@ -143,6 +143,9 @@ void * commut_thread(void * data)
 		int ret;
 		struct list_head * listtmp, *ntmp;
 		struct client * sctmp = NULL;
+		if( (ret =pthread_mutex_lock(&head_mutex)) != 0)
+				syslog(LOG_INFO, "%s %s %d Thread[0x%lX] lock %s\n",
+								__FILE__, __func__,  __LINE__, tid, strerror(ret));
 		list_for_each_safe(listtmp, ntmp, &head)
 		{
 				sctmp = list_entry(listtmp, struct client, list);
@@ -174,7 +177,7 @@ void * commut_thread(void * data)
 						{
 								case '1':
 								case '2':
-										result = get_date_time();
+										result = get_date_time(tid);
 										break;
 								default:
 										break;
@@ -190,19 +193,12 @@ void * commut_thread(void * data)
 										__FILE__, __func__,  __LINE__, tid, commutfd);
 #endif
 				} // end while
-#if 0
-				if( (ret =pthread_mutex_lock(&head_mutex)) != 0)
-								syslog(LOG_INFO, "%s %s %d Thread[0x%lX] lock FD[%d] %s\n",
-										__FILE__, __func__,  __LINE__, tid, commutfd, strerror(ret));
-#endif
 				sctmp->readed = 1;
-#if 0
-				if( (pthread_mutex_unlock(&head_mutex)) != 0)
-								syslog(LOG_INFO, "%s %s %d Thread[0x%lX] unlock FD[%d] %s\n",
-										__FILE__, __func__,  __LINE__, tid, commutfd, strerror(ret));
-#endif
 				sctmp = NULL;
 		} // end list for each
+		if( (ret = pthread_mutex_unlock(&head_mutex)) != 0)
+				syslog(LOG_INFO, "%s %s %d Thread[0x%lX] unlock %s\n",
+								__FILE__, __func__,  __LINE__, tid, strerror(ret));
 #if DEBUG
 		syslog(LOG_INFO, "%s %s %d Thread[0x%lX] exit\n", __FILE__, __func__, __LINE__, tid);
 #endif
@@ -221,41 +217,40 @@ void * free_thread(void * data)
 		int ret;
 		while(1)
 		{
-				list_for_each_safe(listclient, ntmp, &head)
+				if(list_empty(&head))
 				{
-						sctmp = list_entry(listclient, struct client, list);
-						if(sctmp == NULL)
-								continue;
-#if DEBUG
-								syslog(LOG_INFO, "%s %s %d Thread[0x%lX] sctmp addr[0x%p]\n", 
-												__FILE__, __func__, __LINE__, tid, sctmp);
-#endif
-						if(sctmp->readed == 1)
-						{
-#if DEBUG
-								syslog(LOG_INFO, "%s %s %d Thread[0x%lX] start free FD[%d]\n", 
-												__FILE__, __func__, __LINE__, tid, sctmp->cevent.data.fd);
-#endif
-								if( (ret = pthread_mutex_lock(&head_mutex)) != 0)
-								{
-										syslog(LOG_INFO, "%s %s %d Thread[0x%lX] lock FD[%d] %s\n",__FILE__, __func__,  
-														__LINE__, tid, sctmp->cevent.data.fd, strerror(ret));
-										continue;
-								}
-								close(sctmp->cevent.data.fd);
-								list_del(&sctmp->list);
-								free(sctmp);
-								if( (ret = pthread_mutex_unlock(&head_mutex)) != 0)
-										syslog(LOG_INFO, "%s %s %d Thread[0x%lX] lock FD[%d] %s\n",__FILE__, __func__,  
-														__LINE__, tid, sctmp->cevent.data.fd, strerror(ret));
-								sctmp = NULL;
-#if DEBUG
-								syslog(LOG_INFO, "%s %s %d Thread[0x%lX] end free  FD[%d]\n", 
-												__FILE__, __func__,  __LINE__, tid, sctmp->cevent.data.fd);
-#endif
-						}
-						break;
+						sleep(1);
+						continue;
 				}
+				if( (ret = pthread_mutex_lock(&head_mutex)) != 0)
+				{
+						syslog(LOG_INFO, "%s %s %d Thread[0x%lX] lock FD[%d] %s\n",__FILE__, __func__,  
+										__LINE__, tid, sctmp->cevent.data.fd, strerror(ret));
+						continue;
+				}
+				listclient = head.next;
+				sctmp = list_entry( listclient, struct client, list);
+#if DEBUG
+				syslog(LOG_INFO, "%s %s %d Thread[0x%lX] sctmp addr[0x%p]\n", 
+								__FILE__, __func__, __LINE__, tid, sctmp);
+#endif
+				if(sctmp->readed == 1)
+				{
+#if DEBUG
+						syslog(LOG_INFO, "%s %s %d Thread[0x%lX] start free FD[%d]\n", 
+										__FILE__, __func__, __LINE__, tid, sctmp->cevent.data.fd);
+#endif
+						close(sctmp->cevent.data.fd);
+						list_del(&sctmp->list);
+						free(sctmp);
+#if DEBUG
+						syslog(LOG_INFO, "%s %s %d Thread[0x%lX] end free  FD[%d]\n", 
+										__FILE__, __func__,  __LINE__, tid, sctmp->cevent.data.fd);
+#endif
+				}
+				if( (ret = pthread_mutex_unlock(&head_mutex)) != 0)
+						syslog(LOG_INFO, "%s %s %d Thread[0x%lX] lock FD[%d] %s\n",__FILE__, __func__,  
+										__LINE__, tid, sctmp->cevent.data.fd, strerror(ret));
 		}
 #if DEBUG
 		syslog(LOG_INFO, "%s %s %d Thread[0x%lX] exit\n", __FILE__, __func__,  __LINE__, tid);

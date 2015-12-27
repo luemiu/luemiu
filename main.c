@@ -5,19 +5,16 @@ LIST_HEAD(head);
 pthread_mutex_t head_mutex = PTHREAD_MUTEX_INITIALIZER;
 int main (int argc, char *argv[])  
 {  
+		daemon(0, 0);
+		char port [] = "8008";
 		pthread_t ctid;//operation client data thread
-		if (argc != 2)  
-		{  
-				fprintf (stderr, "Usage: %s [port]\n", argv[0]);  
-				return EXIT_FAILURE;
-		}  
 		openlog("Luemiu", LOG_NDELAY, LOG_USER);
 #if DEBUG
 		syslog(LOG_INFO, "%s %s %d %s\n", __FILE__, __func__, __LINE__, "Application init!");
 #endif
 		if (signal(SIGSEGV, dump) == SIG_ERR)
 				syslog(LOG_INFO, "%s %s %d Dump SIG_ERR\n", __FILE__, __func__, __LINE__);
-		if( (sfd = bind_sock(argv[1])) == -1)
+		if( (sfd = bind_sock(port)) == -1)
 				return EXIT_FAILURE;
 #if DEBUG
 		syslog(LOG_INFO, "%s %s %d %s\n", __FILE__, __func__, __LINE__, "Socket inited!");
@@ -99,10 +96,12 @@ int main (int argc, char *argv[])
 						if( (events[i].events & EPOLLRDHUP) || (events[i].events & EPOLLHUP)
 										|| (events[i].events & EPOLLERR) || (events[i].events & EPOLLPRI) )
 						{
+#if DEBUG
 								syslog(LOG_ERR, "%s %s %d EPOLLRDHUP[0x%X]EPOLLHUP[0x%X]EPOLLERR[0x%X]EPOLLPRI[0x%X]\n",
 												__FILE__, __func__, __LINE__, events[i].events & EPOLLRDHUP,
 												events[i].events & EPOLLHUP, events[i].events & EPOLLERR,
 												events[i].events & EPOLLPRI);
+#endif
 								continue;
 						}
 						if(events[i].events & EPOLLIN)
@@ -163,5 +162,6 @@ int main (int argc, char *argv[])
 		} // end while 
 		free(events);  
 		close(sfd);  
+		closelog();
 		return EXIT_SUCCESS;  
 }  
