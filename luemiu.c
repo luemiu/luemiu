@@ -9,6 +9,14 @@ char * get_date_time(void)
 		return str;
 }
 
+void * Malloc(size_t size)
+{
+#if DEBUG
+		syslog(LOG_INFO, "%s %s %d Malloc init size[%d]\n", __FILE__, __func__, __LINE__, size);
+#endif
+		return malloc(size);
+}
+
 int bind_sock(char * port)
 {
 		struct addrinfo inaddr;
@@ -23,22 +31,23 @@ int bind_sock(char * port)
 
 		if( (ret = getaddrinfo(NULL, port, &inaddr, &result)) != 0)
 		{
-				syslog(LOG_ERR, "%s %d %s\n", __FILE__, __LINE__, strerror(ret));
+				syslog(LOG_ERR, "%s %s %d %s\n", __FILE__, __func__,  __LINE__, strerror(ret));
 				return -1;
 		}
-		syslog(LOG_INFO, "%s %d %s\n", __FILE__, __LINE__, "Get addr info done");
+#if DEBUG
+		syslog(LOG_INFO, "%s %s %d %s\n", __FILE__, __func__, __LINE__, "Get addr info done");
+#endif
 		for(rp = result; rp != NULL; rp = rp->ai_next)
 		{
 				if( (sfd = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol)) == -1)
 						continue;
 				if(bind(sfd, rp->ai_addr, rp->ai_addrlen) == 0)
 						break;
-				syslog(LOG_ERR, "%s %d Socket and bind init error %s\n", __FILE__, __LINE__, strerror(errno));
 				close(sfd);
 		}
 		if(rp == NULL)
 		{
-				syslog(LOG_ERR, "%s %d %s\n", __FILE__, __LINE__, strerror(errno));
+				syslog(LOG_ERR, "%s %s %d %s\n", __FILE__, __func__, __LINE__, strerror(errno));
 				return -1;
 		}
 		freeaddrinfo(result);
@@ -60,7 +69,9 @@ void * accept_thread(void * data)
 {
 		pthread_t tid = pthread_self();
 		pthread_detach(tid);
-		syslog(LOG_INFO, "%s %d Thread accept[%lu] init!\n", __FILE__, __LINE__, tid);
+#if DEBUG
+		syslog(LOG_INFO, "%s %s %d Thread[0x%lX] init!\n", __FILE__, __func__, __LINE__, tid);
+#endif
 		while(1)
 		{
 				int infd;
@@ -70,43 +81,53 @@ void * accept_thread(void * data)
 				if( (infd = accept(sfd, &inaddr, &len)) == -1)
 				{
 						if( (errno != EAGAIN) || (errno != EWOULDBLOCK) )
-								syslog(LOG_ERR, "%s %d Thread accept[%lu] accept error %s\n",
-												__FILE__, __LINE__, tid, strerror(errno));
+								syslog(LOG_ERR, "%s %s %d Thread[0x%lX] accept %s\n",
+												__FILE__, __func__,  __LINE__, tid, strerror(errno));
 						break;
 				}
-				syslog(LOG_INFO, "%s %d Incomming client, thread accept[%lu] accept in client FD[%d]\n", 
-								__FILE__, __LINE__, tid, infd);
+#if DEBUG
+				syslog(LOG_INFO, "%s %s %d Thread[0x%lX] accept in client FD[%d]\n", 
+								__FILE__, __func__,  __LINE__, tid, infd);
+#endif
 				if(getnameinfo(&inaddr, len, hbuf, sizeof hbuf, sbuf, sizeof sbuf, NI_NUMERICHOST | NI_NUMERICSERV) != 0)
 				{
-						syslog(LOG_ERR, "%s %d Thread accept[%lu], getnameinfo from FD[%d] error %s, closing it\n",
-										__FILE__, __LINE__, tid, infd, strerror(errno));
+						syslog(LOG_ERR, "%s %s %d Thread[0x%lX] getnameinfo from FD[%d] %s, closing it\n",
+										__FILE__, __func__,  __LINE__, tid, infd, strerror(errno));
 						close(infd);
 						break;
 				}
-				syslog(LOG_INFO, "%s %d Thread accept[%lu] getting client FD[%d] info, addr %s port %s\n", 
-								__FILE__, __LINE__, tid, infd, hbuf, sbuf);
+#if DEBUG
+				syslog(LOG_INFO, "%s %s %d Thread[0x%lX] get client FD[%d] info, addr %s port %s\n", 
+								__FILE__, __func__,  __LINE__, tid, infd, hbuf, sbuf);
+#endif
 				if(set_nonblocking(infd) == -1)
 				{
-						syslog(LOG_ERR, "%s %d Thread accept[%lu] set nonblocking FD[%d] error, closing it%s\n", 
-										__FILE__, __LINE__, tid, infd, strerror(errno));
+						syslog(LOG_ERR, "%s %s %d Thread[0x%lX] set nonblocking FD[%d] %s, closing it\n", 
+										__FILE__, __func__,  __LINE__, tid, infd, strerror(errno));
 						close(infd);
 						break;
 				}
-				syslog(LOG_INFO, "%s %d Thread accept[%lu] set non-blocking FD[%d] finished!\n", 
-								__FILE__, __LINE__, tid, infd);
+#if DEBUG
+				syslog(LOG_INFO, "%s %s %d Thread[0x%lX] set non-blocking FD[%d] done\n", 
+								__FILE__, __func__, __LINE__, tid, infd);
+#endif
 				event.data.fd = infd;
 				event.events = EPOLLIN | EPOLLET | EPOLLHUP | EPOLLERR | EPOLLPRI | EPOLLRDHUP;
 				if(epoll_ctl(efd, EPOLL_CTL_ADD, infd, &event) == -1)	
 				{
-						syslog(LOG_ERR, "%s %d Thread accpet[%lu] EPOLL_CTL_ADD FD[%d] error, closing it%s\n",
-										__FILE__, __LINE__, tid, infd, strerror(errno));
+						syslog(LOG_ERR, "%s %s %d Thread[0x%lX] EPOLL_CTL_ADD FD[%d] %s, closing it\n",
+										__FILE__, __func__,  __LINE__, tid, infd, strerror(errno));
 						close(infd);
 						break;
 				}
-				syslog(LOG_INFO, "%s %d Thread accept[%lu] EPOLL_CTL_ADD FD[%d] finished!\n", 
-								__FILE__, __LINE__, tid, infd);
+#if DEBUG
+				syslog(LOG_INFO, "%s %s %d Thread[0x%lX] EPOLL_CTL_ADD FD[%d] done\n", 
+								__FILE__, __func__, __LINE__, tid, infd);
+#endif
 		}
-		syslog(LOG_INFO, "%s %d Thread accept[%lu] end!\n", __FILE__, __LINE__, tid);
+#if DEBUG
+		syslog(LOG_INFO, "%s %s %d Thread[0x%lX] exit\n", __FILE__, __func__,  __LINE__, tid);
+#endif
 		return NULL;
 }
 
@@ -115,14 +136,18 @@ void * commut_thread(void * data)
 {
 		pthread_t tid = pthread_self();
 		pthread_detach(tid);
-		syslog(LOG_INFO, "%s %d Thread commut[%lu] init!\n", __FILE__, __LINE__, tid);
+#if DEBUG
+		syslog(LOG_INFO, "%s %s %d Thread[0x%lX] init\n", __FILE__, __func__,  __LINE__, tid);
+#endif
 		char * result;
 		int ret;
 		struct list_head * listtmp, *ntmp;
-		struct client * sctmp;
+		struct client * sctmp = NULL;
 		list_for_each_safe(listtmp, ntmp, &head)
 		{
 				sctmp = list_entry(listtmp, struct client, list);
+				if(sctmp->readed)
+						continue;
 				int commutfd = sctmp->cevent.data.fd;
 				while(1)
 				{
@@ -130,17 +155,21 @@ void * commut_thread(void * data)
 						char buf[MAXEVENTS];
 						if( (count = read(commutfd, buf, sizeof buf)) == -1)
 						{
+								if(EBADF == errno)
+										pthread_exit(0);
 								if(EAGAIN != errno)
-										syslog(LOG_ERR, "%s %d Thread commut[%lu] read FD[%d] error %s\n",
-														__FILE__, __LINE__, tid, commutfd,  strerror(errno));
+										syslog(LOG_ERR, "%s %s %d Thread[0x%lX] read FD[%d] %s\n",
+														__FILE__, __func__,  __LINE__, tid, commutfd,  strerror(errno));
 								break;
 						}
 						else if(count == 0)
 						{
 								break;
 						}
-						syslog(LOG_INFO, "%s %d Thread commut[%lu] reading [%d] chars from FD[%d]!\n", 
-										__FILE__, __LINE__, tid, count, commutfd);
+#if DEBUG
+						syslog(LOG_INFO, "%s %s %d Thread[0x%lX] read [%d] chars from FD[%d], addr[0x%lX]\n", 
+										__FILE__, __func__, __LINE__, tid, count, commutfd, sctmp);
+#endif
 						switch(buf[0])
 						{
 								case '1':
@@ -152,49 +181,84 @@ void * commut_thread(void * data)
 						}
 						if(write(commutfd, result, strlen(result)) == -1)
 						{
-								syslog(LOG_ERR, "%s %d Thread commut[%lu] write FD[%d] error %s\n",
-												__FILE__, __LINE__, tid, commutfd,  strerror(errno));
-								break;
+								syslog(LOG_ERR, "%s %s %d Thread[0x%lX] write FD[%d] %s\n",
+												__FILE__,__func__,  __LINE__, tid, commutfd,  strerror(errno));
+								pthread_exit(0);
 						}
-						syslog(LOG_INFO, "%s %d Thread commut[%lu] writting FD[%d]!\n", 
-										__FILE__, __LINE__, tid, commutfd);
+#if DEBUG
+						syslog(LOG_INFO, "%s %s %d Thread[0x%lX] write FD[%d]!\n", 
+										__FILE__, __func__,  __LINE__, tid, commutfd);
+#endif
 				} // end while
+#if 0
+				if( (ret =pthread_mutex_lock(&head_mutex)) != 0)
+								syslog(LOG_INFO, "%s %s %d Thread[0x%lX] lock FD[%d] %s\n",
+										__FILE__, __func__,  __LINE__, tid, commutfd, strerror(ret));
+#endif
 				sctmp->readed = 1;
+#if 0
+				if( (pthread_mutex_unlock(&head_mutex)) != 0)
+								syslog(LOG_INFO, "%s %s %d Thread[0x%lX] unlock FD[%d] %s\n",
+										__FILE__, __func__,  __LINE__, tid, commutfd, strerror(ret));
+#endif
+				sctmp = NULL;
 		} // end list for each
+#if DEBUG
+		syslog(LOG_INFO, "%s %s %d Thread[0x%lX] exit\n", __FILE__, __func__, __LINE__, tid);
+#endif
 		return NULL;
 }
 
-void * dog_thread(void * data)
+void * free_thread(void * data)
 {
 		pthread_t tid = pthread_self();
 		pthread_detach(tid);
-		syslog(LOG_INFO, "%s %d Thread dog[%lu] init!\n", __FILE__, __LINE__, tid);
-		struct list_head * listclient, * ntmp, * listdog, * ndog;
-		struct client * sctmp;
-		struct dog * dogtmp;
-//		pthread_cond_signal(&dog_cond);
-		list_for_each_safe(listdog, ndog, &dog)
+#if DEBUG
+		syslog(LOG_INFO, "%s %s %d Thread[0x%lX] init\n", __FILE__, __func__,  __LINE__, tid);
+#endif
+		struct list_head * listclient, * ntmp;
+		struct client * sctmp = NULL;
+		int ret;
+		while(1)
 		{
-				dogtmp = list_entry(listdog, struct dog, list);
-				pthread_mutex_lock(&dog_mutex);
-				list_del(&dogtmp->list);
-				pthread_mutex_unlock(&dog_mutex);
 				list_for_each_safe(listclient, ntmp, &head)
 				{
 						sctmp = list_entry(listclient, struct client, list);
-						if( (dogtmp->fd == sctmp->cevent.data.fd) && sctmp->readed)
+						if(sctmp == NULL)
+								continue;
+#if DEBUG
+								syslog(LOG_INFO, "%s %s %d Thread[0x%lX] sctmp addr[0x%p]\n", 
+												__FILE__, __func__, __LINE__, tid, sctmp);
+#endif
+						if(sctmp->readed == 1)
 						{
-								pthread_mutex_lock(&head_mutex);
-								list_del(&sctmp->list);
-								pthread_mutex_unlock(&head_mutex);
+#if DEBUG
+								syslog(LOG_INFO, "%s %s %d Thread[0x%lX] start free FD[%d]\n", 
+												__FILE__, __func__, __LINE__, tid, sctmp->cevent.data.fd);
+#endif
+								if( (ret = pthread_mutex_lock(&head_mutex)) != 0)
+								{
+										syslog(LOG_INFO, "%s %s %d Thread[0x%lX] lock FD[%d] %s\n",__FILE__, __func__,  
+														__LINE__, tid, sctmp->cevent.data.fd, strerror(ret));
+										continue;
+								}
 								close(sctmp->cevent.data.fd);
+								list_del(&sctmp->list);
 								free(sctmp);
-								syslog(LOG_INFO, "%s %d Thread dog[%lu] delete FD[%d]\n", 
-												__FILE__, __LINE__, tid, dogtmp->fd);
-								break;
+								if( (ret = pthread_mutex_unlock(&head_mutex)) != 0)
+										syslog(LOG_INFO, "%s %s %d Thread[0x%lX] lock FD[%d] %s\n",__FILE__, __func__,  
+														__LINE__, tid, sctmp->cevent.data.fd, strerror(ret));
+								sctmp = NULL;
+#if DEBUG
+								syslog(LOG_INFO, "%s %s %d Thread[0x%lX] end free  FD[%d]\n", 
+												__FILE__, __func__,  __LINE__, tid, sctmp->cevent.data.fd);
+#endif
 						}
+						break;
 				}
-				free(dogtmp);
 		}
+#if DEBUG
+		syslog(LOG_INFO, "%s %s %d Thread[0x%lX] exit\n", __FILE__, __func__,  __LINE__, tid);
+#endif 
 		return NULL;
 }

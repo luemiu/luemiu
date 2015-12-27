@@ -15,10 +15,20 @@
 #include <pthread.h>
 #include <syslog.h>
 #include <assert.h>
+#include <execinfo.h>
+#include <signal.h>
 
 #include "luemiu.h"
+#include "dump.h"
 
-#define MAXEVENTS 1024
+#define FREE(p)  do {                                                                                                   \
+		                	syslog(LOG_INFO, "%s %s %d free(0x%lX)\n", __FILE__, __func__, __LINE__, (unsigned long)p); \
+		                	free(p);                                                                                    \
+		        } while (0)
+
+#define MALLOC(s) Malloc(s)
+
+#define MAXEVENTS 128
 
 int sfd;//socket fd
 int efd;//epoll fd
@@ -29,9 +39,7 @@ struct epoll_event * events;
 extern struct list_head head;//incomming client list 
 extern struct list_head dog;//close dog list
 
-extern pthread_mutex_t dog_mutex;
 extern pthread_mutex_t head_mutex;
-extern pthread_cond_t dog_cond;
 
 struct client
 {
@@ -40,9 +48,4 @@ struct client
 		struct list_head list;		
 };
 
-struct dog
-{
-		int fd;	
-		struct list_head list;		
-};
 #endif
