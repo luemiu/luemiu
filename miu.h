@@ -1,5 +1,5 @@
-#ifndef __LUEMIU_H__
-#define __LUEMIU_H__
+#ifndef __MIU_H__
+#define __MIU_H__
 #include "main.h"
 
 extern int bind_sock(char *);
