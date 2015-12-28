@@ -3,21 +3,21 @@
 LIST_HEAD(head);
 pthread_mutex_t head_mutex = PTHREAD_MUTEX_INITIALIZER;
 int main (int argc, char *argv[])  
-{  
-		if(optargs(argc, argv) == 1)
+{ 
+		if(optargs(argc, argv) & 1)
 				daemon(0, 0);
-		char port [] = "8008";
+		char port[] = "8008";
 		pthread_t ctid;//operation client data thread
-		openlog("Luemiu", LOG_NDELAY, LOG_USER);
+		openlog(APPNAME, LOG_ODELAY, LOG_LOCAL0);
 #if DEBUG
-		syslog(LOG_INFO, "%s %s %d %s\n", __FILE__, __func__, __LINE__, "Application init!");
+		syslog(LOG_DEBUG, "%s %s %d %s\n", __FILE__, __func__, __LINE__, "Application init!");
 #endif
 		if (signal(SIGSEGV, dump) == SIG_ERR)
-				syslog(LOG_INFO, "%s %s %d Dump SIG_ERR\n", __FILE__, __func__, __LINE__);
+				syslog(LOG_DEBUG, "%s %s %d Dump SIG_ERR\n", __FILE__, __func__, __LINE__);
 		if( (sfd = bind_sock(port)) == -1)
 				return EXIT_FAILURE;
 #if DEBUG
-		syslog(LOG_INFO, "%s %s %d %s\n", __FILE__, __func__, __LINE__, "Socket inited!");
+		syslog(LOG_DEBUG, "%s %s %d %s\n", __FILE__, __func__, __LINE__, "Socket inited!");
 #endif
 		if(set_nonblocking(sfd) == -1)
 		{
@@ -26,7 +26,7 @@ int main (int argc, char *argv[])
 				return EXIT_FAILURE;
 		}
 #if DEBUG
-		syslog(LOG_INFO, "%s %s %d %s\n", __FILE__, __func__, __LINE__, "Socket set non-blocking!");
+		syslog(LOG_DEBUG, "%s %s %d %s\n", __FILE__, __func__, __LINE__, "Socket set non-blocking!");
 #endif
 		if(listen (sfd, SOMAXCONN) == -1)  
 		{
@@ -35,7 +35,7 @@ int main (int argc, char *argv[])
 				return EXIT_FAILURE;
 		}
 #if DEBUG
-		syslog(LOG_INFO, "%s %s %d %s\n", __FILE__, __func__, __LINE__, "Socket listened!");
+		syslog(LOG_DEBUG, "%s %s %d %s\n", __FILE__, __func__, __LINE__, "Socket listened!");
 #endif
 		if( (efd = epoll_create1 (0)) == -1)  
 		{
@@ -44,7 +44,7 @@ int main (int argc, char *argv[])
 				return EXIT_FAILURE;
 		}
 #if DEBUG
-		syslog(LOG_INFO, "%s %s %d %s\n", __FILE__, __func__, __LINE__, "Epoll created!");
+		syslog(LOG_DEBUG, "%s %s %d %s\n", __FILE__, __func__, __LINE__, "Epoll created!");
 #endif
 		event.data.fd = sfd;  
 		event.events = EPOLLIN | EPOLLET;
@@ -56,7 +56,7 @@ int main (int argc, char *argv[])
 				return EXIT_FAILURE;
 		}
 #if DEBUG
-		syslog(LOG_INFO, "%s %s %d %s\n", __FILE__, __func__, __LINE__, "Epoll EPOLL_CTL_ADD added!");
+		syslog(LOG_DEBUG, "%s %s %d %s\n", __FILE__, __func__, __LINE__, "Epoll EPOLL_CTL_ADD added!");
 #endif
 		if( (events = (struct epoll_event *)MALLOC(MAXEVENTS*sizeof(event))) == NULL)
 		{
@@ -76,7 +76,7 @@ int main (int argc, char *argv[])
 				for(i = 0; i < n; i++)  
 				{  
 #if DEBUG
-						syslog(LOG_INFO, "%s %s %d Events[%d] = [0x%X]\n",
+						syslog(LOG_DEBUG, "%s %s %d Events[%d] = [0x%X]\n",
 										__FILE__, __func__, __LINE__, n, events[i].events);
 #endif
 						if(events[i].data.fd == sfd)
@@ -88,7 +88,7 @@ int main (int argc, char *argv[])
 								}
 #if DEBUG
 								else
-										syslog(LOG_INFO, "%s %s %d event[%d] accept thread created\n",
+										syslog(LOG_DEBUG, "%s %s %d event[%d] accept thread created\n",
 														__FILE__, __func__, __LINE__, n );
 #endif
 								continue;
@@ -138,24 +138,24 @@ int main (int argc, char *argv[])
 				{
 						if( (result = pthread_create(&ctid, NULL, commut_thread, NULL)) != 0)
 						{
-								syslog(LOG_INFO, "%s %s %d commut thread create %s, conntinue\n",
+								syslog(LOG_DEBUG, "%s %s %d commut thread create %s, conntinue\n",
 												__FILE__, __func__, __LINE__, strerror(result));
 								continue;
 						}
 #if DEBUG
-						syslog(LOG_INFO, "%s %s %d commut thread[0x%lX] created\n", __FILE__, __func__, __LINE__, ctid);
+						syslog(LOG_DEBUG, "%s %s %d commut thread[0x%lX] created\n", __FILE__, __func__, __LINE__, ctid);
 #endif
 				}
 				if(freeflag)
 				{
 						if( (result = pthread_create(&ctid, NULL, free_thread, NULL)) != 0)
 						{
-								syslog(LOG_INFO, "%s %s %d Free thread create %s\n",
+								syslog(LOG_DEBUG, "%s %s %d Free thread create %s\n",
 												__FILE__, __func__, __LINE__, strerror(result));
 								freeflag = 1;
 						}
 #if DEBUG
-						syslog(LOG_INFO, "%s %s %d Free thread[0x%lX] created\n", __FILE__, __func__, __LINE__, ctid);
+						syslog(LOG_DEBUG, "%s %s %d Free thread[0x%lX] created\n", __FILE__, __func__, __LINE__, ctid);
 #endif
 						freeflag = 0;
 				}
