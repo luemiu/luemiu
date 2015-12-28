@@ -1,9 +1,8 @@
 #include "main.h"
 
-static char str[64];
-
 char * get_date_time(unsigned long threadid)
 {
+		static char str[128];
 		time_t t = time(NULL);
 		snprintf(str, sizeof str, "0x%lX %.24s", threadid, ctime(&t));
 		return str;
@@ -15,6 +14,34 @@ void * Malloc(size_t size)
 		syslog(LOG_INFO, "%s %s %d Malloc init size[%d]\n", __FILE__, __func__, __LINE__, size);
 #endif
 		return malloc(size);
+}
+
+void usage(void)
+{
+		fprintf(stdout, "Usage:%s [-d | -h]\n", APPNAME);
+		fprintf(stdout, "      -d Daemon init\n");
+		fprintf(stdout, "      -h Show this help message\n");
+		exit(0);
+}
+
+int optargs(int argc, char ** argv)
+{
+		int ch;
+		int args = 0;
+		while ((ch = getopt(argc, argv, "dh")) != -1)
+				switch(ch)
+				{
+						case 'd':
+								args = 1;
+								break;
+						case 'h':
+								usage();
+								break;
+						default:
+								usage();
+								break;
+				}
+		return args;
 }
 
 int bind_sock(char * port)

@@ -1,11 +1,11 @@
 #include "main.h"
 
 LIST_HEAD(head);
-
 pthread_mutex_t head_mutex = PTHREAD_MUTEX_INITIALIZER;
 int main (int argc, char *argv[])  
 {  
-		daemon(0, 0);
+		if(optargs(argc, argv) == 1)
+				daemon(0, 0);
 		char port [] = "8008";
 		pthread_t ctid;//operation client data thread
 		openlog("Luemiu", LOG_NDELAY, LOG_USER);

@@ -18,6 +18,8 @@
 #include <execinfo.h>
 #include <signal.h>
 
+#define APPNAME "luemiu"
+
 #include "miu.h"
 #include "dump.h"
 

@@ -9,5 +9,7 @@ extern void * accept_thread(void *);
 extern void * commut_thread(void *);
 extern void * free_thread(void *);
 extern void * Malloc(size_t);
+void usage(void);
+int optargs(int, char **);
 
 #endif
