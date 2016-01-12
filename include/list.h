@@ -34,8 +34,9 @@ struct hlist_node
 };
 #define LIST_POISON1  (void *) 0x00100100
 #define LIST_POISON2  (void *) 0x00200200
-
+/*
 #define offsetof(type, member) (size_t)&(((type*)0)->member)
+*/
 
 #define container_of(ptr, type, member) ({ \
 				     const typeof( ((type *)0)->member ) *__mptr = (ptr); \

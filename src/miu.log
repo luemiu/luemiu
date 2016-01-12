@@ -1,0 +1,162 @@
+Mon Jan 11 00:26:32 2016 miu.c accept_thread 196 Thread[0xB72F4B40] SSL_accept FD[7] Resource temporarily unavailable, closing it
+Mon Jan 11 00:40:56 2016 miu.c accept_thread 196 Thread[0xB7335B40] SSL_accept FD[7] Resource temporarily unavailable, closing it
+Mon Jan 11 00:44:41 2016 miu.c accept_thread 196 Thread[0xB7BC3B40] SSL_accept FD[7] Resource temporarily unavailable, closing it
+Mon Jan 11 00:55:59 2016 miu.c commut_thread 236 Thread[0xB7360B40] read FD[-1239342984] ssl read
+Mon Jan 11 00:55:59 2016 miu.c commut_thread 236 Thread[0xB7360B40] read FD[-1239342984] ssl read
+Mon Jan 11 01:00:01 2016 miu.c commut_thread 239 Thread[0xB72EDB40] read FD[-1240464280] ssl read
+Mon Jan 11 01:00:01 2016 miu.c commut_thread 239 Thread[0xB72EDB40] read FD[-1240464280] ssl read
+Mon Jan 11 01:00:02 2016 miu.c commut_thread 239 Thread[0xB72EDB40] read FD[-1240389160] ssl read
+Mon Jan 11 01:00:02 2016 miu.c commut_thread 239 Thread[0xB72EDB40] read FD[-1240389160] ssl read
+Mon Jan 11 01:07:22 2016 miu.c commut_thread 239 Thread[0xB72D0B40] read FD[-1240464280] ssl read
+Mon Jan 11 01:07:26 2016 miu.c commut_thread 239 Thread[0xB72D0B40] read FD[-1240464280] ssl read
+Mon Jan 11 01:07:26 2016 miu.c commut_thread 239 Thread[0xB72D0B40] read FD[-1240464280] ssl read
+Mon Jan 11 01:09:40 2016 miu.c commut_thread 239 Thread[0xB69FFB40] read FD[-1231027096] ssl read
+Mon Jan 11 01:09:41 2016 miu.c commut_thread 239 Thread[0xB69FFB40] read FD[-1231027096] ssl read
+Mon Jan 11 01:17:58 2016 miu.c commut_thread 239 Thread[0xB69FFB40] read FD[-1231027096] ssl read
+Mon Jan 11 01:19:39 2016 miu.c commut_thread 239 Thread[0xB7316B40] read FD[-1239415704] ssl read
+Mon Jan 11 01:19:39 2016 miu.c commut_thread 239 Thread[0xB7316B40] read FD[-1239415704] ssl read
+Mon Jan 11 01:22:34 2016 miu.c commut_thread 239 Thread[0xB731DB40] read FD[-1239415704] ssl read
+Mon Jan 11 01:22:41 2016 miu.c commut_thread 239 Thread[0xB731DB40] read FD[-1239415704] ssl read
+Mon Jan 11 01:22:41 2016 miu.c commut_thread 239 Thread[0xB61FFB40] read FD[-1239415704] ssl read
+Mon Jan 11 01:27:19 2016 miu.c commut_thread 239 Thread[0xB69FFB40] read FD[-1231027096] ssl read
+Mon Jan 11 01:42:52 2016 miu.c commut_thread 250 Thread[0xB7394B40] read FD[-1239413400] ssl read
+Mon Jan 11 01:42:55 2016 miu.c commut_thread 250 Thread[0xB7394B40] read FD[-1239356072] ssl read
+Mon Jan 11 01:42:57 2016 miu.c commut_thread 250 Thread[0xB7394B40] read FD[-1239344904] ssl read
+Mon Jan 11 01:42:59 2016 miu.c commut_thread 250 Thread[0xB7394B40] read FD[-1239337176] ssl read
+Mon Jan 11 01:43:01 2016 miu.c accept_thread 185 Thread[0xB7394B40] SSL_accept FD[7] Success, closing it
+Mon Jan 11 01:43:03 2016 miu.c accept_thread 185 Thread[0xB7394B40] SSL_accept FD[7] Success, closing it
+Mon Jan 11 01:50:41 2016 miu.c commut_thread 251 Thread[0xB732FB40] read FD[7] ssl read
+Mon Jan 11 01:50:55 2016 miu.c commut_thread 251 Thread[0xB732FB40] read FD[7] ssl read
+Mon Jan 11 01:50:56 2016 miu.c commut_thread 251 Thread[0xB732FB40] read FD[7] ssl read
+Mon Jan 11 01:50:57 2016 miu.c commut_thread 251 Thread[0xB61FFB40] read FD[7] ssl read
+Mon Jan 11 01:51:00 2016 miu.c commut_thread 251 Thread[0xB61FFB40] read FD[7] ssl read
+Mon Jan 11 01:51:02 2016 miu.c commut_thread 251 Thread[0xB61FFB40] read FD[7] ssl read
+Mon Jan 11 01:51:03 2016 miu.c commut_thread 251 Thread[0xB61FFB40] read FD[7] ssl read
+Mon Jan 11 01:51:05 2016 miu.c commut_thread 251 Thread[0xB61FFB40] read FD[7] ssl read
+Mon Jan 11 01:51:06 2016 miu.c commut_thread 251 Thread[0xB61FFB40] read FD[7] ssl read
+Mon Jan 11 01:51:08 2016 miu.c commut_thread 251 Thread[0xB61FFB40] read FD[7] ssl read
+Mon Jan 11 01:53:30 2016 miu.c commut_thread 251 Thread[0xB69FFB40] read FD[7] ssl read
+Mon Jan 11 01:53:39 2016 miu.c commut_thread 251 Thread[0xB69FFB40] read FD[7] ssl read
+Mon Jan 11 01:53:41 2016 miu.c commut_thread 251 Thread[0xB69FFB40] read FD[7] ssl read
+Mon Jan 11 01:53:42 2016 miu.c commut_thread 251 Thread[0xB69FFB40] read FD[7] ssl read
+Mon Jan 11 01:53:43 2016 miu.c commut_thread 251 Thread[0xB7BC3B40] read FD[7] ssl read
+Mon Jan 11 01:53:43 2016 miu.c commut_thread 251 Thread[0xB7BC3B40] read FD[7] ssl read
+Mon Jan 11 01:54:03 2016 miu.c commut_thread 251 Thread[0xB7BC3B40] read FD[7] ssl read
+Mon Jan 11 01:54:03 2016 miu.c commut_thread 251 Thread[0xB69FFB40] read FD[7] ssl read
+Mon Jan 11 22:43:09 2016 miu.c commut_thread 251 Thread[0xB73A0B40] read FD[7] ssl read
+Mon Jan 11 22:43:09 2016 miu.c commut_thread 251 Thread[0xB61FFB40] read FD[7] ssl read
+Mon Jan 11 22:43:10 2016 dump.c dump 10 dump.c dump 10 dump init, catch signal[11]
+Mon Jan 11 22:43:10 2016 dump.c dump 21 dump.c dump 21 0 ./a.out() [0x80492a5]
+Mon Jan 11 22:43:10 2016 dump.c dump 21 dump.c dump 21 1 linux-gate.so.1(__kernel_sigreturn+0) [0xb77b7d1c]
+Mon Jan 11 22:43:10 2016 dump.c dump 21 dump.c dump 21 2 /usr/lib/i386-linux-gnu/i686/cmov/libssl.so.1.0.0(SSL_shutdown+0x1a) [0xb775913a]
+Mon Jan 11 22:43:10 2016 dump.c dump 21 dump.c dump 21 3 ./a.out() [0x804ae9f]
+Mon Jan 11 22:43:10 2016 dump.c dump 21 dump.c dump 21 4 /lib/i386-linux-gnu/i686/cmov/libpthread.so.0(+0x6efb) [0xb7782efb]
+Mon Jan 11 22:43:10 2016 dump.c dump 21 dump.c dump 21 5 /lib/i386-linux-gnu/i686/cmov/libc.so.6(clone+0x5e) [0xb749062e]
+Mon Jan 11 22:45:07 2016 miu.c commut_thread 251 Thread[0xB69FFB40] read FD[7] ssl read
+Mon Jan 11 22:53:28 2016 miu.c commut_thread 251 Thread[0xB69FFB40] read FD[7] ssl read
+Mon Jan 11 22:53:47 2016 miu.c commut_thread 251 Thread[0xB69FFB40] read FD[7] ssl read
+Mon Jan 11 22:54:37 2016 miu.c commut_thread 251 Thread[0xB69FFB40] read FD[7] ssl read
+Mon Jan 11 22:58:48 2016 miu.c commut_thread 251 Thread[0xB69FFB40] read FD[7] ssl read
+Mon Jan 11 23:04:58 2016 miu.c commut_thread 251 Thread[0xB69FFB40] read FD[7] ssl read
+Mon Jan 11 23:28:04 2016 miu.c commut_thread 255 Thread[0xB7BC5B40] read FD[7] error:00000006:lib(0):func(0):EVP lib
+Mon Jan 11 23:28:50 2016 miu.c commut_thread 255 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:34:52 2016 miu.c commut_thread 255 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:20 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:42 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:46 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:48 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:48 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:49 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:49 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:49 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:50 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:50 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:50 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:51 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:51 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:52 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:52 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:52 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:53 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:53 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:53 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:54 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:54 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:54 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:55 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:56 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:56 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:56 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:56 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:56 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:56 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:56 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:56 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:56 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:56 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:56 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:57 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:57 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:57 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:57 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:57 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:57 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:57 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:57 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:57 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:57 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:57 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:57 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:57 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:58 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:58 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:58 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:58 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:58 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:58 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:39:59 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:00 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:00 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:00 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:01 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:01 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:01 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:02 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:02 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:03 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:04 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:04 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:04 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:05 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:05 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:06 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:06 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:06 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:07 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:08 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:09 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:09 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:10 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:11 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:11 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:12 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:12 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:14 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:15 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:15 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:16 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:16 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:17 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:17 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:17 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:18 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:18 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:18 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:19 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:20 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:20 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:40:21 2016 miu.c commut_thread 254 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib:error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:44:54 2016 miu.c commut_thread 254 Thread[0xB7BC5B40] read FD[7] error:00000005:lib(0):func(0):DH lib=error:00000005:lib(0):func(0):DH lib
+Mon Jan 11 23:59:32 2016 miu.c commut_thread 255 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib=error:00000005:lib(0):func(0):DH lib
+Tue Jan 12 00:44:58 2016 miu.c commut_thread 256 Thread[0xB69FFB40] read FD[7] error:00000005:lib(0):func(0):DH lib=error:00000005:lib(0):func(0):DH lib
+Tue Jan 12 01:56:28 2016 miu.c commut_thread 256 Thread[0xB69FFB40] read FD[7] error:00000000:lib(0):func(0):reason(0)=error:00000000:lib(0):func(0):reason(0)
